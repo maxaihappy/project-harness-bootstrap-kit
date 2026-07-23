@@ -18,13 +18,13 @@ Draft — implementation in progress. This dossier will be completed after indep
 
 | Acceptance criterion | Evidence | Status |
 |---|---|---|
-| `scripts/bootstrap` succeeds from a clean clone | Pending Manus review | pending |
-| `scripts/test` passes | Pending | pending |
-| `scripts/secrets-check` passes | Pending | pending |
-| `uv sync --locked` succeeds | Pending | pending |
-| CI green on PR head | Pending | pending |
-| Required H0 artifacts committed | In progress | in progress |
-| Approved input hashes match committed files | Recorded in execution plan | pending verification |
+| `scripts/bootstrap` succeeds from a clean clone | Local bootstrap pass; Manus review pending | in progress |
+| `scripts/test` passes | Local pytest pass (5 tests) | in progress |
+| `scripts/secrets-check` passes | Local pass | in progress |
+| `uv sync --locked` succeeds | Local pass | in progress |
+| CI green on PR head | Pending GitHub Actions | pending |
+| Required H0 artifacts committed | Yes | pass |
+| Approved input hashes match committed files | Recorded in execution plan | pass |
 | Manus independent portability review | Not started | pending |
 
 ## Approved input SHA-256 hashes
@@ -35,9 +35,22 @@ Draft — implementation in progress. This dossier will be completed after indep
 | `h0-repository-bootstrap.md` | `d543f9c3f2e299faa12b2ca7f0513e1f8dee941bf478fc8f339c62daf72cd1c0` |
 | `Project_Continuum_Proposal_Harness_Engineering_v0.3.docx` | `4e2f0155ce0c3537104466b09b6fa1f04f66be98a707dbe5b65a85c7b4a4f11b` |
 
+`VALIDATED_SOURCE_COMMIT`: `a705e79eccebbb47c4cc0f65a234ad35282342cf`
+
+## Local validation summary (Cursor, 2026-07-22)
+
+| Command | Result |
+|---|---|
+| `bash scripts/bootstrap` | pass |
+| `bash scripts/test` | pass (5 tests) |
+| `bash scripts/secrets-check` | pass |
+| `uv sync --locked` | pass |
+
+Secret baseline: empty results (`{}`); no unexplained findings.
+
 ## Candidate implementation commit
 
-`VALIDATED_SOURCE_COMMIT`: _(recorded after local validation)_
+`VALIDATED_SOURCE_COMMIT`: `a705e79eccebbb47c4cc0f65a234ad35282342cf`
 
 ## Known limitations
 
