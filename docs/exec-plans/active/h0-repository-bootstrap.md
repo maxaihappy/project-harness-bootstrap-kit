@@ -20,16 +20,16 @@ lineage: Manus v2.2; ChatGPT consolidation v2.3-v2.4
 | `h0-repository-bootstrap.md` | `d543f9c3f2e299faa12b2ca7f0513e1f8dee941bf478fc8f339c62daf72cd1c0` |
 | `Project_Continuum_Proposal_Harness_Engineering_v0.3.docx` | `4e2f0155ce0c3537104466b09b6fa1f04f66be98a707dbe5b65a85c7b4a4f11b` |
 
-**GitHub issue:** #1  
-**Implementation branch:** `bootstrap/h0`  
+**GitHub issue:** #1
+**Implementation branch:** `bootstrap/h0`
 **Pull request:** #2
 
 ---
 
 # Project Continuum - H0 Repository Bootstrap Plan
 
-**Current baseline:** `main` contains one initial `README.md` commit.  
-**Execution authority:** Implementation begins only after the product owner creates/approves the H0 GitHub issue and authorizes Cursor to execute this plan.  
+**Current baseline:** `main` contains one initial `README.md` commit.
+**Execution authority:** Implementation begins only after the product owner creates/approves the H0 GitHub issue and authorizes Cursor to execute this plan.
 
 ---
 
