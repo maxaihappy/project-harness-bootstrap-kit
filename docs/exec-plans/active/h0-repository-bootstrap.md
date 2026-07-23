@@ -22,7 +22,7 @@ lineage: Manus v2.2; ChatGPT consolidation v2.3-v2.4
 
 **GitHub issue:** #1  
 **Implementation branch:** `bootstrap/h0`  
-**Pull request:** _(recorded after draft PR creation)_
+**Pull request:** #2
 
 ---
 
