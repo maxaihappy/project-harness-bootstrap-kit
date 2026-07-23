@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v uv >/dev/null 2>&1; then
+  echo "uv is required. Install it using the documented prerequisite in README.md." >&2
+  exit 1
+fi
+
+uv sync --locked
+uv run pre-commit install
+bash scripts/check
