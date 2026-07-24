@@ -19,4 +19,6 @@ repos:
     hooks:
       - id: detect-secrets
         args: [--baseline, .secrets.baseline]
-        exclude: ^docs/validation/reviews/
+        # Immutable external review reports preserved byte-for-byte; future review
+        # files under docs/validation/reviews/ remain subject to secret scanning.
+        exclude: '^docs/validation/reviews/(h0-manus-review-5f772f2|h0-manus-rereview-19f6765|h0-manus-github-evidence-addendum-19f6765)\.md$'
