@@ -4,7 +4,7 @@ Private repository for Project Continuum and its agent-first engineering harness
 
 ## Status
 
-H0 repository bootstrap is in progress on branch `bootstrap/h0`. See [AGENTS.md](AGENTS.md) for agent navigation and [docs/exec-plans/active/h0-repository-bootstrap.md](docs/exec-plans/active/h0-repository-bootstrap.md) for the active execution plan.
+H0 repository bootstrap is complete on branch `bootstrap/h0` (PR #2, ready for product-owner review). See [AGENTS.md](AGENTS.md) for agent navigation and [docs/exec-plans/completed/h0-repository-bootstrap.md](docs/exec-plans/completed/h0-repository-bootstrap.md) for the completed execution plan.
 
 ## Prerequisites
 

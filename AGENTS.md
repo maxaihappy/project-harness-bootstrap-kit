@@ -5,11 +5,11 @@ This repository is the system of record for Project Continuum. Read documents in
 1. [Canonical proposal](docs/strategy/project-continuum-proposal.md) — product strategy and constraints
 2. [Architecture policy](ARCHITECTURE.md) and [architecture-boundaries.toml](architecture-boundaries.toml) — dependency rules
 3. [Approved H0 baseline](docs/reference/approved-inputs/h0-repository-bootstrap-approved.md) — immutable approved execution input
-4. [Active execution plan](docs/exec-plans/active/h0-repository-bootstrap.md) — mutable execution record and status
+4. [Completed H0 execution plan](docs/exec-plans/completed/h0-repository-bootstrap.md) — closed execution record (ready-for-merge)
 5. [ADRs](docs/decisions/) — technical decisions
 6. [Validation evidence](docs/validation/h0-repository-bootstrap.md) — test results and review outcomes
 
-**Document authority:** Markdown sources override presentation exports. The approved H0 baseline is immutable; the active execution plan is mutable. See [document register](docs/governance/document-register.md).
+**Document authority:** Markdown sources override presentation exports. The approved H0 baseline is immutable; the completed execution plan is the closed H0 record. See [document register](docs/governance/document-register.md).
 
 ## Authoritative commands
 
@@ -27,7 +27,7 @@ Makefile targets delegate to these scripts for convenience.
 ## Branch policy
 
 - Work on feature branches; do not push directly to `main`.
-- H0 work occurs on `bootstrap/h0`.
+- H0 work occurred on `bootstrap/h0` (PR #2).
 - Merge requires explicit product-owner approval.
 
 ## Approval gates
@@ -40,7 +40,7 @@ Makefile targets delegate to these scripts for convenience.
 
 Stop and escalate to the product owner when:
 
-- Repository state conflicts with the active execution plan or issue scope.
+- Repository state conflicts with the completed execution plan or issue scope.
 - A check fails and the fix would weaken validation or introduce product behavior.
 - A secret is detected — remove and rotate; do not baseline without review.
 - An undocumented runtime dependency would be required.

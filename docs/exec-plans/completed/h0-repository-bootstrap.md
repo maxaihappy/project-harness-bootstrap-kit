@@ -2,9 +2,9 @@
 title: Project Continuum H0 Repository Bootstrap Plan
 document_id: continuum-h0-repository-bootstrap
 version: 2.4
-status: ready-for-execution
+status: ready-for-merge
 owner: Product Owner
-last_updated: 2026-07-21
+last_updated: 2026-07-24
 proposal: docs/strategy/project-continuum-proposal.md
 proposal_version: 0.3
 repository: https://github.com/maxaihappy/continuum
@@ -12,9 +12,9 @@ implementation_branch: bootstrap/h0
 lineage: Manus v2.2; ChatGPT consolidation v2.3-v2.4
 ---
 
-## Execution record (mutable)
+## Execution record (completed)
 
-This file is the **mutable active execution record**. The immutable approved H0 baseline is stored at `docs/reference/approved-inputs/h0-repository-bootstrap-approved.md` and must not be edited after import.
+This file is the **completed H0 execution record**. The immutable approved H0 baseline is stored at `docs/reference/approved-inputs/h0-repository-bootstrap-approved.md` and must not be edited after import.
 
 | Artifact | SHA-256 |
 |---|---|
@@ -24,7 +24,7 @@ This file is the **mutable active execution record**. The immutable approved H0 
 
 **GitHub issue:** #1
 **Implementation branch:** `bootstrap/h0`
-**Pull request:** #2 (draft)
+**Pull request:** #2 (ready for product-owner review after closeout CI)
 
 ---
 
@@ -823,8 +823,8 @@ recommendation. Do not modify or merge the repository unless explicitly asked.
 | Rejected review candidate | `5f772f23434f97acb8e235ea5d6b95fb0a29f7df` |
 | Review result | REJECT |
 | Historical review report | `docs/validation/reviews/h0-manus-review-5f772f2.md` |
-| Independent re-review | pending |
-| New review candidate | pending (record after remediation commits and green CI) |
+| Independent re-review | completed |
+| Reviewed candidate | `19f6765eacc7a49c5d0da0e2645009eb72a79217` |
 
 ### Finding remediation tracker
 
@@ -835,4 +835,22 @@ recommendation. Do not modify or merge the repository unless explicitly asked.
 | M-3 | Incomplete architecture enforcement | remediated | `143b304` |
 | M-4 | Incomplete validation evidence | remediated | `e106936` |
 
-Remediation commits: `347fadf`, `143b304`, `e106936`. New review candidate: pending push and green CI.
+Remediation commits: `347fadf`, `143b304`, `e106936`, `19f6765`. Reviewed implementation candidate: `19f6765eacc7a49c5d0da0e2645009eb72a79217`.
+
+---
+
+## H0 closeout (2026-07-24)
+
+| Field | Value |
+|---|---|
+| Reviewed implementation candidate | `19f6765eacc7a49c5d0da0e2645009eb72a79217` |
+| M-1 through M-4 | resolved |
+| Independent repository re-review | completed — [h0-manus-rereview-19f6765.md](../../validation/reviews/h0-manus-rereview-19f6765.md) |
+| GitHub evidence addendum | completed — [h0-manus-github-evidence-addendum-19f6765.md](../../validation/reviews/h0-manus-github-evidence-addendum-19f6765.md) |
+| Validation dossier | finalized — [h0-repository-bootstrap.md](../../validation/h0-repository-bootstrap.md) |
+| Product-owner merge approval | pending |
+| Deployment | none |
+| Issue #1 | open until merge |
+| PR #2 | unmerged |
+
+This plan is closed with status **ready-for-merge**. H0 is not merged or released until the product owner explicitly approves and merges PR #2.
