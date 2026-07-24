@@ -12,6 +12,20 @@ try:
 except ModuleNotFoundError:  # pragma: no cover - Python 3.11+
     import tomli as tomllib  # type: ignore[no-redef]
 
+EXECUTABLE_EXTENSIONS = {
+    ".py",
+    ".pyi",
+    ".js",
+    ".jsx",
+    ".ts",
+    ".tsx",
+    ".go",
+    ".rs",
+    ".java",
+    ".kt",
+    ".sh",
+}
+
 
 @dataclass(frozen=True)
 class Violation:
@@ -63,10 +77,36 @@ def _extract_imports(source: str) -> set[str]:
     for node in ast.walk(tree):
         if isinstance(node, ast.Import):
             for alias in node.names:
-                imports.add(alias.name.split(".")[0])
+                imports.add(alias.name)
         elif isinstance(node, ast.ImportFrom) and node.module:
-            imports.add(node.module.split(".")[0])
+            imports.add(node.module)
+            for alias in node.names:
+                if alias.name != "*":
+                    imports.add(f"{node.module}.{alias.name}")
     return imports
+
+
+def _module_matches_prefix(module_name: str, restricted: str) -> bool:
+    return module_name == restricted or module_name.startswith(f"{restricted}.")
+
+
+def _domain_module_names(domain_path: str) -> set[str]:
+    root_name = domain_path.rstrip("/").split("/")[-1]
+    return {root_name}
+
+
+def _import_references_domain(import_name: str, domain_path: str) -> bool:
+    for domain_name in _domain_module_names(domain_path):
+        if _module_matches_prefix(import_name, domain_name):
+            return True
+    return False
+
+
+def _is_restricted_import(import_name: str, restricted_modules: list[str]) -> str | None:
+    for restricted in restricted_modules:
+        if _module_matches_prefix(import_name, restricted):
+            return restricted
+    return None
 
 
 def check_file(file_path: Path, policy: dict[str, Any], root: Path) -> list[Violation]:
@@ -78,46 +118,51 @@ def check_file(file_path: Path, policy: dict[str, Any], root: Path) -> list[Viol
 
     domain = _domain_for_file(rel, policy)
     contracts_path = policy.get("contracts", {}).get("path", "packages/contracts").rstrip("/")
+    contracts_name = contracts_path.split("/")[-1]
 
     if domain:
         for other_domain, other_path in policy.get("product_domains", {}).items():
             if other_domain == domain:
                 continue
-            other_root = other_path.rstrip("/").split("/")[-1]
-            if other_root in imports:
-                violations.append(
-                    Violation(
-                        file=rel,
-                        import_name=other_root,
-                        rule="product_domains_must_not_cross_import",
-                        remediation=(
-                            f"Remove direct import of '{other_root}' from product domain "
-                            f"'{domain}'. Depend on contracts or escalate via ADR."
-                        ),
+            for import_name in imports:
+                if _import_references_domain(import_name, other_path):
+                    violations.append(
+                        Violation(
+                            file=rel,
+                            import_name=import_name,
+                            rule="product_domains_must_not_cross_import",
+                            remediation=(
+                                f"Remove direct import of '{import_name}' from product domain "
+                                f"'{domain}'. Depend on contracts or escalate via ADR."
+                            ),
+                        )
                     )
-                )
 
     if _is_harness_file(rel, policy):
         for domain_path in policy.get("product_domains", {}).values():
-            domain_root = domain_path.rstrip("/").split("/")[-1]
-            if domain_root in imports and domain_root != contracts_path.split("/")[-1]:
-                violations.append(
-                    Violation(
-                        file=rel,
-                        import_name=domain_root,
-                        rule="harness_must_not_import_product_domains",
-                        remediation=(
-                            f"Harness file '{rel_posix}' must not import product domain "
-                            f"'{domain_root}'."
-                        ),
+            domain_name = domain_path.rstrip("/").split("/")[-1]
+            if domain_name == contracts_name:
+                continue
+            for import_name in imports:
+                if _import_references_domain(import_name, domain_path):
+                    violations.append(
+                        Violation(
+                            file=rel,
+                            import_name=import_name,
+                            rule="harness_must_not_import_product_domains",
+                            remediation=(
+                                f"Harness file '{rel_posix}' must not import product domain "
+                                f"'{domain_name}' via '{import_name}'."
+                            ),
+                        )
                     )
-                )
 
     for category, cfg in policy.get("restricted_imports", {}).items():
-        modules = set(cfg.get("modules", []))
+        restricted_modules = cfg.get("modules", [])
         approved_paths = [p.rstrip("/") for p in cfg.get("approved_paths", [])]
-        for module_name in imports:
-            if module_name not in modules:
+        for import_name in imports:
+            matched = _is_restricted_import(import_name, restricted_modules)
+            if matched is None:
                 continue
             allowed = any(
                 rel_posix.startswith(f"{approved}/") or rel_posix == approved
@@ -127,16 +172,49 @@ def check_file(file_path: Path, policy: dict[str, Any], root: Path) -> list[Viol
                 violations.append(
                     Violation(
                         file=rel,
-                        import_name=module_name,
+                        import_name=import_name,
                         rule=f"restricted_import:{category}",
                         remediation=(
-                            f"Import '{module_name}' is restricted to approved adapter paths "
-                            f"for '{category}'. Update architecture policy and ADR to add a path, "
-                            f"or remove the import from '{rel_posix}'."
+                            f"Import '{import_name}' matches restricted module '{matched}' for "
+                            f"'{category}'. Update architecture policy and ADR to add an approved "
+                            f"path, or remove the import from '{rel_posix}'."
                         ),
                     )
                 )
 
+    return violations
+
+
+def check_placeholder_directories(policy: dict[str, Any], root: Path) -> list[Violation]:
+    placeholder_cfg = policy.get("placeholder_only", {})
+    placeholder_paths = placeholder_cfg.get("paths", [])
+    extensions = set(placeholder_cfg.get("executable_extensions", sorted(EXECUTABLE_EXTENSIONS)))
+    violations: list[Violation] = []
+
+    for placeholder_path in placeholder_paths:
+        base = root / placeholder_path
+        if not base.exists():
+            continue
+        for path in base.rglob("*"):
+            if not path.is_file():
+                continue
+            rel = path.relative_to(root)
+            rel_posix = rel.as_posix()
+            if path.name == "README.md":
+                continue
+            if path.suffix in extensions:
+                violations.append(
+                    Violation(
+                        file=rel,
+                        import_name=path.suffix,
+                        rule="placeholder_only_no_executable_source",
+                        remediation=(
+                            f"Placeholder directory '{placeholder_path}' must not contain "
+                            f"executable source files during H0. Remove '{rel_posix}' or move it "
+                            f"outside the placeholder boundary."
+                        ),
+                    )
+                )
     return violations
 
 
@@ -152,4 +230,5 @@ def check_policy(policy_path: Path, root: Path | None = None) -> list[Violation]
     violations: list[Violation] = []
     for file_path in files:
         violations.extend(check_file(file_path, policy, root))
+    violations.extend(check_placeholder_directories(policy, root))
     return violations
