@@ -1,0 +1,27 @@
+# Isolated policy for architecture boundary fixture tests.
+
+[scan]
+paths = ["tests/fixtures/architecture/cases"]
+exclude_globs = []
+
+[product_domains]
+relationship_core = "tests/fixtures/architecture/cases/relationship_core"
+intelligence = "tests/fixtures/architecture/cases/intelligence"
+
+[contracts]
+path = "tests/fixtures/architecture/cases/contracts"
+
+[harness]
+paths = ["tests/fixtures/architecture/cases/harness"]
+
+[placeholder_only]
+paths = ["tests/fixtures/architecture/cases/placeholder_only"]
+executable_extensions = [".py", ".pyi", ".js", ".jsx", ".ts", ".tsx", ".go", ".rs", ".java", ".kt", ".sh"]
+
+[restricted_imports.model_providers]
+modules = ["openai", "anthropic", "google.generativeai"]
+approved_paths = ["tests/fixtures/architecture/cases/adapters/model"]
+
+[restricted_imports.cloud]
+modules = ["google.cloud", "boto3"]
+approved_paths = ["tests/fixtures/architecture/cases/adapters/cloud"]

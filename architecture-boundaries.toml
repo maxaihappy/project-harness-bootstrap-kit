@@ -1,0 +1,51 @@
+# Machine-readable architecture boundary policy for H0.
+# See ARCHITECTURE.md for intent. Enforced by tests/architecture/test_package_boundaries.py.
+
+[scan]
+paths = [
+  "packages",
+  "harness",
+  "evals",
+  "tests/architecture",
+]
+exclude_globs = ["tests/fixtures/**"]
+
+[product_domains]
+channel_gateway = "packages/channel_gateway"
+relationship_core = "packages/relationship_core"
+intelligence = "packages/intelligence"
+memory_governance = "packages/memory_governance"
+
+[contracts]
+path = "packages/contracts"
+
+[harness]
+paths = ["harness", "tests/architecture"]
+
+[placeholder_only]
+paths = [
+  "packages/contracts",
+  "packages/channel_gateway",
+  "packages/relationship_core",
+  "packages/intelligence",
+  "packages/memory_governance",
+  "harness",
+  "evals",
+]
+executable_extensions = [".py", ".pyi", ".js", ".jsx", ".ts", ".tsx", ".go", ".rs", ".java", ".kt", ".sh"]
+
+[restricted_imports.telegram]
+modules = ["telegram", "telebot"]
+approved_paths = []
+
+[restricted_imports.model_providers]
+modules = ["openai", "anthropic", "google.generativeai"]
+approved_paths = []
+
+[restricted_imports.database]
+modules = ["sqlalchemy", "psycopg2", "asyncpg"]
+approved_paths = []
+
+[restricted_imports.cloud]
+modules = ["boto3", "google.cloud"]
+approved_paths = []
