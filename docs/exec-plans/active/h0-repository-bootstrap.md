@@ -830,7 +830,9 @@ recommendation. Do not modify or merge the repository unless explicitly asked.
 
 | ID | Finding | Status | Remediation commit |
 |---|---|---|---|
-| M-1 | Approved-input integrity | remediated | pending commit |
-| M-2 | Broken traceability links | remediated | pending commit |
-| M-3 | Incomplete architecture enforcement | remediated | pending commit |
-| M-4 | Incomplete validation evidence | remediated | pending commit |
+| M-1 | Approved-input integrity | remediated | `347fadf` |
+| M-2 | Broken traceability links | remediated | `347fadf` |
+| M-3 | Incomplete architecture enforcement | remediated | `143b304` |
+| M-4 | Incomplete validation evidence | remediated | `e106936` |
+
+Remediation commits: `347fadf`, `143b304`, `e106936`. New review candidate: pending push and green CI.
