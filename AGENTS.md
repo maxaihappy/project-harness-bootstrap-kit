@@ -4,11 +4,12 @@ This repository is the system of record for Project Continuum. Read documents in
 
 1. [Canonical proposal](docs/strategy/project-continuum-proposal.md) — product strategy and constraints
 2. [Architecture policy](ARCHITECTURE.md) and [architecture-boundaries.toml](architecture-boundaries.toml) — dependency rules
-3. [Active execution plan](docs/exec-plans/active/h0-repository-bootstrap.md) — current work and status
-4. [ADRs](docs/decisions/) — technical decisions
-5. [Validation evidence](docs/validation/h0-repository-bootstrap.md) — test results and review outcomes
+3. [Approved H0 baseline](docs/reference/approved-inputs/h0-repository-bootstrap-approved.md) — immutable approved execution input
+4. [Active execution plan](docs/exec-plans/active/h0-repository-bootstrap.md) — mutable execution record and status
+5. [ADRs](docs/decisions/) — technical decisions
+6. [Validation evidence](docs/validation/h0-repository-bootstrap.md) — test results and review outcomes
 
-**Document authority:** Markdown sources override presentation exports. See [document register](docs/governance/document-register.md).
+**Document authority:** Markdown sources override presentation exports. The approved H0 baseline is immutable; the active execution plan is mutable. See [document register](docs/governance/document-register.md).
 
 ## Authoritative commands
 

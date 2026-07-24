@@ -9,7 +9,9 @@ repos:
     rev: cef0300fd0fc4d2a87a85fa2093c6b283ea36f4b # pragma: allowlist secret # v5.0.0
     hooks:
       - id: trailing-whitespace
+        exclude: ^docs/reference/approved-inputs/
       - id: end-of-file-fixer
+        exclude: ^docs/reference/approved-inputs/
       - id: check-yaml
       - id: check-toml
   - repo: https://github.com/Yelp/detect-secrets

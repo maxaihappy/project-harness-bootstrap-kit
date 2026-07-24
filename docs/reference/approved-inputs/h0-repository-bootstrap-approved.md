@@ -12,26 +12,10 @@ implementation_branch: bootstrap/h0
 lineage: Manus v2.2; ChatGPT consolidation v2.3-v2.4
 ---
 
-## Execution record (mutable)
-
-This file is the **mutable active execution record**. The immutable approved H0 baseline is stored at `docs/reference/approved-inputs/h0-repository-bootstrap-approved.md` and must not be edited after import.
-
-| Artifact | SHA-256 |
-|---|---|
-| Approved H0 baseline (`h0-repository-bootstrap-approved.md`) | `d543f9c3f2e299faa12b2ca7f0513e1f8dee941bf478fc8f339c62daf72cd1c0` |
-| Canonical proposal (`project-continuum-proposal.md`) | `a765e009ac3934a8a43075eda475d33f2b3301958ba853a22a1fb562647d161b` |
-| DOCX export (`project-continuum-proposal-v0.3.docx`) | `4e2f0155ce0c3537104466b09b6fa1f04f66be98a707dbe5b65a85c7b4a4f11b` |
-
-**GitHub issue:** #1
-**Implementation branch:** `bootstrap/h0`
-**Pull request:** #2 (draft)
-
----
-
 # Project Continuum - H0 Repository Bootstrap Plan
 
-**Current baseline:** `main` contains one initial `README.md` commit.
-**Execution authority:** Implementation begins only after the product owner creates/approves the H0 GitHub issue and authorizes Cursor to execute this plan.
+**Current baseline:** `main` contains one initial `README.md` commit.  
+**Execution authority:** Implementation begins only after the product owner creates/approves the H0 GitHub issue and authorizes Cursor to execute this plan.  
 
 ---
 
@@ -148,7 +132,7 @@ continuum/
 │   │   ├── README.md
 │   │   └── adr-0001-h0-repository-bootstrap.md
 │   ├── exec-plans/
-│   │   ├── active/h0-repository-bootstrap.md
+│   │   ├── active/h0-bootstrap.md
 │   │   └── completed/.gitkeep
 │   ├── validation/h0-repository-bootstrap.md
 │   ├── quality/README.md
@@ -361,7 +345,7 @@ git switch -c bootstrap/h0
 
 The first commit contains:
 
-- This approved plan at `docs/exec-plans/active/h0-repository-bootstrap.md`.
+- This approved plan at `docs/exec-plans/active/h0-bootstrap.md`.
 - The canonical proposal at `docs/strategy/project-continuum-proposal.md`.
 - The unmodified Word export at `docs/reference/exports/project-continuum-proposal-v0.3.docx`.
 - The initial document register at `docs/governance/document-register.md`.
@@ -384,7 +368,7 @@ Push and open a draft PR linked to issue `#N`:
 git push -u origin bootstrap/h0
 gh pr create \
   --title "H0: Repository bootstrap" \
-  --body "Draft implementation for issue #N. See docs/exec-plans/active/h0-repository-bootstrap.md." \
+  --body "Draft implementation for issue #N. See docs/exec-plans/active/h0-bootstrap.md." \
   --base main \
   --head bootstrap/h0 \
   --draft
@@ -564,7 +548,7 @@ Complete `docs/validation/h0-repository-bootstrap.md` with:
 Move the active plan to:
 
 ```text
-docs/exec-plans/completed/h0-repository-bootstrap.md
+docs/exec-plans/completed/h0-bootstrap.md
 ```
 
 Set status to `ready-for-merge`. Do **not** claim the closing commit or merge commit SHA inside the same commit that creates it. The PR and GitHub merge record remain authoritative for those SHAs.
@@ -721,7 +705,7 @@ Authoritative product context:
 docs/strategy/project-continuum-proposal.md
 
 Authoritative execution plan:
-docs/exec-plans/active/h0-repository-bootstrap.md
+docs/exec-plans/active/h0-bootstrap.md
 
 Authoritative validation dossier:
 docs/validation/h0-repository-bootstrap.md
@@ -813,24 +797,3 @@ recommendation. Do not modify or merge the repository unless explicitly asked.
 ---
 
 *Plan v2.4 is execution-ready. Implementation begins only after explicit product-owner approval and creation of the H0 GitHub issue.*
-
----
-
-## Remediation after first Manus review (2026-07-23)
-
-| Field | Value |
-|---|---|
-| Rejected review candidate | `5f772f23434f97acb8e235ea5d6b95fb0a29f7df` |
-| Review result | REJECT |
-| Historical review report | `docs/validation/reviews/h0-manus-review-5f772f2.md` |
-| Independent re-review | pending |
-| New review candidate | pending (record after remediation commits and green CI) |
-
-### Finding remediation tracker
-
-| ID | Finding | Status | Remediation commit |
-|---|---|---|---|
-| M-1 | Approved-input integrity | remediated | pending commit |
-| M-2 | Broken traceability links | remediated | pending commit |
-| M-3 | Incomplete architecture enforcement | remediated | pending commit |
-| M-4 | Incomplete validation evidence | remediated | pending commit |
