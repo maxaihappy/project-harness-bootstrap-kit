@@ -10,6 +10,8 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 
 OBSOLETE_ACTIVE_PLAN_PATH = "docs/exec-plans/active/h0-bootstrap.md"
+COMPLETED_PLAN_PATH = "docs/exec-plans/completed/h0-repository-bootstrap.md"
+ACTIVE_PLAN_PATH = "docs/exec-plans/active/h0-repository-bootstrap.md"
 
 REQUIRED_PATHS = [
     "AGENTS.md",
@@ -19,8 +21,11 @@ REQUIRED_PATHS = [
     "docs/reference/approved-inputs/h0-repository-bootstrap-approved.md",
     "docs/governance/document-register.md",
     "docs/decisions/adr-0001-h0-repository-bootstrap.md",
-    "docs/exec-plans/active/h0-repository-bootstrap.md",
+    COMPLETED_PLAN_PATH,
     "docs/validation/h0-repository-bootstrap.md",
+    "docs/validation/reviews/h0-manus-review-5f772f2.md",
+    "docs/validation/reviews/h0-manus-rereview-19f6765.md",
+    "docs/validation/reviews/h0-manus-github-evidence-addendum-19f6765.md",
     ".github/ISSUE_TEMPLATE/requirement.md",
     ".github/PULL_REQUEST_TEMPLATE/pull_request_template.md",
     ".github/workflows/ci.yml",
@@ -33,6 +38,7 @@ APPROVED_BASELINE_SHA256 = (
 OBSOLETE_PATH_EXCLUDE_PREFIXES = (
     "docs/validation/reviews/",
     "docs/reference/approved-inputs/",
+    "docs/exec-plans/completed/",
 )
 
 LINK_PATTERN = re.compile(
@@ -83,6 +89,17 @@ def test_required_h0_paths_exist(relative_path: str) -> None:
     assert (ROOT / relative_path).is_file(), f"Missing required path: {relative_path}"
 
 
+def test_completed_plan_replaced_active_plan() -> None:
+    assert (ROOT / COMPLETED_PLAN_PATH).is_file()
+    assert not (ROOT / ACTIVE_PLAN_PATH).exists()
+
+
+def test_agents_md_points_to_completed_plan() -> None:
+    agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+    assert COMPLETED_PLAN_PATH in agents
+    assert ACTIVE_PLAN_PATH not in agents
+
+
 def test_approved_baseline_hash_matches() -> None:
     import hashlib
 
@@ -99,6 +116,16 @@ def test_no_obsolete_active_plan_path_in_active_documents() -> None:
         if OBSOLETE_ACTIVE_PLAN_PATH in content:
             offenders.append(rel)
     assert not offenders, "Obsolete active-plan path found in:\n" + "\n".join(offenders)
+
+
+def test_validation_dossier_links_all_manus_reports() -> None:
+    dossier = (ROOT / "docs/validation/h0-repository-bootstrap.md").read_text(encoding="utf-8")
+    for report in (
+        "h0-manus-review-5f772f2.md",
+        "h0-manus-rereview-19f6765.md",
+        "h0-manus-github-evidence-addendum-19f6765.md",
+    ):
+        assert report in dossier
 
 
 def test_required_document_links_resolve() -> None:
@@ -136,7 +163,7 @@ def test_document_register_authority_entries() -> None:
     register = (ROOT / "docs/governance/document-register.md").read_text(encoding="utf-8")
     assert "h0-repository-bootstrap-approved.md" in register
     assert "immutable" in register.lower() or "Immutable" in register
-    assert "docs/exec-plans/active/h0-repository-bootstrap.md" in register
-    assert "mutable" in register.lower() or "Mutable" in register
+    assert COMPLETED_PLAN_PATH in register
+    assert "ready-for-merge" in register
     assert "project-continuum-proposal-v0.3.docx" in register
     assert "Non-authoritative" in register or "non-authoritative" in register
