@@ -1,7 +1,7 @@
 ---
 title: Issue #1 Project Harness Extraction Plan
 document_id: issue-1-project-harness-extraction
-version: 1.0
+version: 1.1
 status: ready-for-execution
 owner: Product Owner
 last_updated: 2026-07-25
@@ -22,7 +22,9 @@ This file is the **active execution plan** for Issue #1. Implementation has **no
 |---|---|
 | Requirement issue | [#1](https://github.com/maxaihappy/project-harness-bootstrap-kit/issues/1) — open |
 | Implementation branch | `foundation/extract-project-harness` — created |
-| Draft pull request | **not yet created** |
+| Draft pull request | [#2 — draft](https://github.com/maxaihappy/project-harness-bootstrap-kit/pull/2) |
+| Planning commit | `8b980d8b673acf8a8da5c268257cb4f8c1d8c4b9` |
+| Planning validation | `bash scripts/check` — passed |
 | ADR for extraction decisions | **not yet created** |
 | Validation dossier | [docs/validation/issue-1-project-harness-extraction.md](../../validation/issue-1-project-harness-extraction.md) — planning stub only |
 | Reviewed implementation candidate | **not yet identified** |
@@ -159,7 +161,8 @@ Issue #1 implementation will add harness-specific tests (residual-reference dete
 
 | Phase | Status |
 |---|---|
-| Planning initialization | **completed** (this commit) |
+| Planning initialization | **completed** at `8b980d8b673acf8a8da5c268257cb4f8c1d8c4b9` |
+| Draft pull request | **completed** — PR #2 |
 | Implementation | **not yet completed** |
 | Local validation | **not yet completed** |
 | CI | **not yet completed** |
@@ -168,6 +171,7 @@ Issue #1 implementation will add harness-specific tests (residual-reference dete
 | Closeout | **not yet completed** |
 | Final delta review | **not yet completed** |
 | Merge | **not yet completed** |
+| Template activation | **not yet completed** |
 
 ### Precondition
 
@@ -188,21 +192,14 @@ Record issue #1, branch, source commit, source tags, and future PR placeholder i
 
 **Gate:** No extraction implementation begins until this planning commit lands and the product owner authorizes implementation.
 
-### Step 2 — Create draft pull request
+### Step 2 — Create draft pull request — completed
 
-After the planning commit:
-
-```bash
-git push -u origin foundation/extract-project-harness
-gh pr create \
-  --title "Issue #1: Extract reusable project harness from Continuum H0" \
-  --body "Draft for Issue #1. See docs/exec-plans/active/issue-1-project-harness-extraction.md." \
-  --base main \
-  --head foundation/extract-project-harness \
-  --draft
-```
-
-Record PR number in this plan and the validation dossier.
+- PR: #2
+- URL: https://github.com/maxaihappy/project-harness-bootstrap-kit/pull/2
+- Base: `main`
+- Head: `foundation/extract-project-harness`
+- State: draft
+- Planning commit: `8b980d8b673acf8a8da5c268257cb4f8c1d8c4b9`
 
 ### Step 3 — Generalize governance and navigation
 
@@ -338,4 +335,4 @@ The immutable source remains available through:
 
 ---
 
-*Plan v1.0 is execution-ready for planning closeout. Extraction implementation begins only after explicit product-owner authorization following this planning commit.*
+*Plan v1.1 records completion of planning initialization and draft PR creation. Extraction implementation begins only after explicit product-owner authorization.*
