@@ -7,7 +7,9 @@
 | Approved H0 Repository Bootstrap Baseline | `docs/reference/approved-inputs/h0-repository-bootstrap-approved.md` | active | 2.4 | Product Owner | **Immutable** approved baseline (SHA-256: `d543f9c3f2e299faa12b2ca7f0513e1f8dee941bf478fc8f339c62daf72cd1c0`) |
 | H0 Repository Bootstrap Execution Record | `docs/exec-plans/completed/h0-repository-bootstrap.md` | ready-for-merge | 2.4 | Product Owner | **Completed** execution record |
 | ADR-0001 H0 Repository Bootstrap | `docs/decisions/adr-0001-h0-repository-bootstrap.md` | accepted | 1.0 | Product Owner | Technical decision record |
-| H0 Validation Dossier | `docs/validation/h0-repository-bootstrap.md` | ready-for-merge | 1.0 | Product Owner | Evidence record |
+| H0 Validation Dossier | `docs/validation/h0-repository-bootstrap.md` | ready-for-merge | 1.0 | Product Owner | H0 evidence record (provenance only for Issue #1) |
+| Issue #1 Project Harness Extraction Plan | `docs/exec-plans/active/issue-1-project-harness-extraction.md` | ready-for-execution | 1.0 | Product Owner | **Active** execution plan for Issue #1 |
+| Issue #1 Validation Dossier | `docs/validation/issue-1-project-harness-extraction.md` | planning | 1.0 | Product Owner | Issue #1 evidence record (planning stub) |
 
 ## Authority rules
 
@@ -16,3 +18,6 @@
 - Export files are copied from the canonical source and registered here as non-authoritative references.
 - The approved H0 baseline at `docs/reference/approved-inputs/h0-repository-bootstrap-approved.md` is immutable and must not be edited after import.
 - The completed execution record at `docs/exec-plans/completed/h0-repository-bootstrap.md` is the closed H0 plan with status `ready-for-merge`.
+- H0 validation evidence documents the imported Continuum baseline only; it does not validate Issue #1 extraction work.
+- The active Issue #1 execution plan at `docs/exec-plans/active/issue-1-project-harness-extraction.md` is the current authority for extraction work.
+- The Issue #1 validation dossier at `docs/validation/issue-1-project-harness-extraction.md` is the evidence record for extraction work and remains a planning stub until implementation validation begins.
