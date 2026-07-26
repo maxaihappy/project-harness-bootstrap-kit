@@ -32,13 +32,13 @@ This file is the **active execution plan** for Issue #1. Historical H0 evidence 
 | Access-block review report | [issue-1-manus-access-block-d10a3c22.md](../../validation/reviews/issue-1-manus-access-block-d10a3c22.md) — preserved |
 | Manus recommendation | **BLOCK** (initial review, re-review, and second re-review) |
 | Remediation | **in progress** — secret-scan remediation |
-| Branch protection (product-owner GitHub action) | **not yet completed** — `main` unprotected per H-01 |
+| Branch protection (product-owner GitHub action) | **completed** — `main` protected on 2026-07-26 |
 | ADR for extraction decisions | [ADR-0002](../../decisions/adr-0002-project-harness-extraction.md) — accepted |
 | Validation dossier | [docs/validation/issue-1-project-harness-extraction.md](../../validation/issue-1-project-harness-extraction.md) — remediation evidence |
 | Independent re-review | **completed** — BLOCK at `b5d62179864fed7a68e2210e396e83d9835ee464` |
 | Second-pass remediation | **completed** at `f88abc14fed9b784db6e9481afa22975868718a8` |
 | Second independent re-review | **completed** — BLOCK at `f88abc14fed9b784db6e9481afa22975868718a8` |
-| Third-pass remediation | **in progress** — secret-scan remediation |
+| Third-pass remediation | **completed** at `79ef1d737f438a4e117223c41a3c1e01e31a81fd` |
 | Closeout | **not yet completed** |
 | Final delta review | **not yet required** |
 | Product-owner merge approval | **not yet requested** |
@@ -295,22 +295,37 @@ Review report:
 - [issue-1-manus-rereview-f88abc14.md](../../validation/reviews/issue-1-manus-rereview-f88abc14.md)
 - SHA-256: `234a387b492f5f958b38722e29c44e5a9c24a700f7ec849d04416ec5886a4380`
 
-### Step 14 — Third remediation (in progress)
+### Step 14 — Third remediation (completed)
 
-Address M-01 secret-scan remediation: generated `scripts/secrets-check` must scan untracked files before the initial commit without staging or mutating Git state. A new remediation commit and independent re-review are required before closeout.
+Addressed M-01 secret-scan remediation in candidate `79ef1d737f438a4e117223c41a3c1e01e31a81fd`. Generated `scripts/secrets-check` now scans untracked files before the initial commit without staging or mutating Git state. A new independent re-review is required before closeout.
 
-### Step 15 — Closeout
+### Step 15 — Branch protection (completed)
+
+Product owner approved GitHub branch protection for `main` on 2026-07-26. Configured controls:
+
+- pull request required before merge;
+- at least one approving review required;
+- `validate` status check required (strict: branch must be up to date);
+- force pushes blocked;
+- branch deletion blocked;
+- admin bypass disabled (`enforce_admins: true`);
+- no bypass allowances configured;
+- auto-merge remains disabled on PR #2.
+
+This governance action does not authorize merge, template mode, deployment, or infrastructure.
+
+### Step 16 — Closeout
 
 - Finalize the validation dossier with requirement coverage, command outputs, CI links, review record, limitations, and rollback.
 - Move this plan to `docs/exec-plans/completed/issue-1-project-harness-extraction.md`.
 - Set plan status to `ready-for-merge`.
 - Confirm CI is green on the PR head.
 
-### Step 16 — Final delta review (if needed)
+### Step 17 — Final delta review (if needed)
 
 If any commits land after the independently reviewed implementation commit, obtain a narrow delta review before merge.
 
-### Step 17 — Product-owner approval and merge
+### Step 18 — Product-owner approval and merge
 
 - Product owner reviews scope, validation dossier, independent review, CI, and rollback.
 - Merge using a merge commit after explicit approval.
