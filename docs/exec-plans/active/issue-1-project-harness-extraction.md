@@ -25,15 +25,20 @@ This file is the **active execution plan** for Issue #1. Historical H0 evidence 
 | Draft pull request | [#2 — draft](https://github.com/maxaihappy/project-harness-bootstrap-kit/pull/2) |
 | Reviewed implementation candidate | `d10a3c22b814a853e0975a8bc9034ce4575ce4ff` |
 | Remediation candidate | `b5d62179864fed7a68e2210e396e83d9835ee464` |
+| Second-pass remediation candidate | `f88abc14fed9b784db6e9481afa22975868718a8` |
 | Independent review report | [issue-1-manus-independent-review-d10a3c22.md](../../validation/reviews/issue-1-manus-independent-review-d10a3c22.md) |
 | Independent re-review report | [issue-1-manus-rereview-b5d6217.md](../../validation/reviews/issue-1-manus-rereview-b5d6217.md) |
+| Second independent re-review report | [issue-1-manus-rereview-f88abc14.md](../../validation/reviews/issue-1-manus-rereview-f88abc14.md) |
 | Access-block review report | [issue-1-manus-access-block-d10a3c22.md](../../validation/reviews/issue-1-manus-access-block-d10a3c22.md) — preserved |
-| Manus recommendation | **BLOCK** (initial review and re-review) |
-| Remediation | **in progress** |
+| Manus recommendation | **BLOCK** (initial review, re-review, and second re-review) |
+| Remediation | **in progress** — secret-scan remediation |
+| Branch protection (product-owner GitHub action) | **not yet completed** — `main` unprotected per H-01 |
 | ADR for extraction decisions | [ADR-0002](../../decisions/adr-0002-project-harness-extraction.md) — accepted |
 | Validation dossier | [docs/validation/issue-1-project-harness-extraction.md](../../validation/issue-1-project-harness-extraction.md) — remediation evidence |
 | Independent re-review | **completed** — BLOCK at `b5d62179864fed7a68e2210e396e83d9835ee464` |
-| Second-pass remediation | **in progress** |
+| Second-pass remediation | **completed** at `f88abc14fed9b784db6e9481afa22975868718a8` |
+| Second independent re-review | **completed** — BLOCK at `f88abc14fed9b784db6e9481afa22975868718a8` |
+| Third-pass remediation | **in progress** — secret-scan remediation |
 | Closeout | **not yet completed** |
 | Final delta review | **not yet required** |
 | Product-owner merge approval | **not yet requested** |
@@ -274,22 +279,38 @@ Independent review at `d10a3c22b814a853e0975a8bc9034ce4575ce4ff` returned **BLOC
 
 - [issue-1-manus-rereview-b5d6217.md](../../validation/reviews/issue-1-manus-rereview-b5d6217.md)
 
-### Step 12 — Second remediation (in progress)
+### Step 12 — Second remediation (completed)
 
-Address unsafe target overlap, generated quick-start documentation, and traceability for the re-review candidate. A new remediation commit and independent re-review are required before closeout.
+Addressed unsafe target overlap, generated quick-start documentation, and traceability for the re-review candidate. Candidate: `f88abc14fed9b784db6e9481afa22975868718a8`.
 
-### Step 13 — Closeout
+### Step 13 — Second independent re-review (completed — BLOCK)
+
+**Completed — BLOCK** at `f88abc14fed9b784db6e9481afa22975868718a8`. Remaining findings:
+
+- **H-01** — GitHub `main` branch protection not enabled (product-owner-controlled GitHub configuration action; not remediated in repository source).
+- **M-01** — Generated first-run secret check skips untracked files before initial commit.
+
+Review report:
+
+- [issue-1-manus-rereview-f88abc14.md](../../validation/reviews/issue-1-manus-rereview-f88abc14.md)
+- SHA-256: `234a387b492f5f958b38722e29c44e5a9c24a700f7ec849d04416ec5886a4380`
+
+### Step 14 — Third remediation (in progress)
+
+Address M-01 secret-scan remediation: generated `scripts/secrets-check` must scan untracked files before the initial commit without staging or mutating Git state. A new remediation commit and independent re-review are required before closeout.
+
+### Step 15 — Closeout
 
 - Finalize the validation dossier with requirement coverage, command outputs, CI links, review record, limitations, and rollback.
 - Move this plan to `docs/exec-plans/completed/issue-1-project-harness-extraction.md`.
 - Set plan status to `ready-for-merge`.
 - Confirm CI is green on the PR head.
 
-### Step 14 — Final delta review (if needed)
+### Step 16 — Final delta review (if needed)
 
 If any commits land after the independently reviewed implementation commit, obtain a narrow delta review before merge.
 
-### Step 15 — Product-owner approval and merge
+### Step 17 — Product-owner approval and merge
 
 - Product owner reviews scope, validation dossier, independent review, CI, and rollback.
 - Merge using a merge commit after explicit approval.
