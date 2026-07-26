@@ -5,7 +5,7 @@ version: 1.0
 status: planning
 owner: Product Owner
 requirement_issue: 1
-pull_request: not-yet-created
+pull_request: https://github.com/maxaihappy/project-harness-bootstrap-kit/pull/2
 execution_plan: docs/exec-plans/active/issue-1-project-harness-extraction.md
 source_commit: 7c8e04e1e864ee70bd18ffdad29d6517aecde1f7
 continuum_source_tag: h0-bootstrap-baseline
@@ -21,11 +21,25 @@ reviewed_implementation_candidate: not-yet-identified
 
 Historical H0 validation evidence in `docs/validation/h0-repository-bootstrap.md` and `docs/validation/reviews/h0-manus-*.md` documents the imported Continuum H0 baseline only. It does **not** validate Issue #1 extraction work.
 
+## Planning baseline
+
+- Planning commit:
+  `8b980d8b673acf8a8da5c268257cb4f8c1d8c4b9`
+- Draft PR:
+  https://github.com/maxaihappy/project-harness-bootstrap-kit/pull/2
+- Validation command:
+  `bash scripts/check`
+- Result:
+  Passed
+- Scope:
+  Planning artifacts only. This result does not validate the extraction implementation.
+
 ## Phase tracker
 
 | Phase | Status |
 |---|---|
 | Planning initialization | **completed** |
+| Draft PR creation | **completed** — PR #2 |
 | Implementation | **not yet completed** |
 | Local validation | **not yet completed** |
 | CI | **not yet completed** |
@@ -41,7 +55,7 @@ Historical H0 validation evidence in `docs/validation/h0-repository-bootstrap.md
 |---|---|
 | Requirement issue | [#1 — Extract reusable project harness from Continuum H0](https://github.com/maxaihappy/project-harness-bootstrap-kit/issues/1) |
 | Implementation branch | `foundation/extract-project-harness` |
-| Draft pull request | **not yet created** |
+| Draft pull request | [#2](https://github.com/maxaihappy/project-harness-bootstrap-kit/pull/2) — draft |
 | Active execution plan | [docs/exec-plans/active/issue-1-project-harness-extraction.md](../exec-plans/active/issue-1-project-harness-extraction.md) |
 | Document register | [docs/governance/document-register.md](../governance/document-register.md) |
 | Source repository | https://github.com/maxaihappy/continuum |
