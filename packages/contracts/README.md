@@ -1,3 +1,3 @@
 # Contracts
 
-Placeholder for shared contracts and interface definitions. No executable source during H0.
+Placeholder for shared typed interfaces and contracts between product domains.

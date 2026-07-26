@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "$ROOT"
+
+OVERWRITE=0
+ARGS=()
+for arg in "$@"; do
+  case "$arg" in
+    --overwrite)
+      OVERWRITE=1
+      ;;
+    *)
+      ARGS+=("$arg")
+      ;;
+  esac
+done
+
+if [[ ${#ARGS[@]} -lt 2 ]]; then
+  echo "Usage: bash scripts/generate-project [--overwrite] <target-dir> <project-name> [display-name]" >&2
+  exit 1
+fi
+
+TARGET_DIR="${ARGS[0]}"
+PROJECT_NAME="${ARGS[1]}"
+DISPLAY_NAME="${ARGS[2]:-$PROJECT_NAME}"
+
+uv run python - "$TARGET_DIR" "$PROJECT_NAME" "$DISPLAY_NAME" "$OVERWRITE" <<'PY'
+import sys
+from pathlib import Path
+
+from harness.generator.render import generate_project
+
+root = Path.cwd()
+target = Path(sys.argv[1]).resolve()
+name = sys.argv[2]
+display = sys.argv[3]
+overwrite = sys.argv[4] == "1"
+result = generate_project(root, target, name, display, overwrite=overwrite)
+print(f"Generated project at {result.target} ({result.substituted_files} substituted files)")
+PY

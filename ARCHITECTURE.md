@@ -1,16 +1,17 @@
 # Architecture
 
-Project Continuum uses a monorepo with explicit package boundaries. During H0, product directories contain README placeholders only; no importable product packages exist.
+The project harness uses a monorepo with explicit package boundaries. Product directories contain README placeholders only during harness bootstrap; no importable product packages exist until a generated repository implements them.
 
 ## Policy sources
 
 | Artifact | Role |
 |---|---|
 | `architecture-boundaries.toml` | Machine-readable dependency and import policy |
+| `harness-config.toml` | Project-specific package layout and configuration |
 | `tests/architecture/test_package_boundaries.py` | AST-based enforcement |
 | This document | Human-readable intent |
 
-## H0 dependency intent
+## Dependency intent
 
 ```text
 product boundary placeholders  ──future──> contracts
@@ -22,10 +23,10 @@ tests                          ──────────> test utilities an
 
 1. Product-domain directories may eventually depend on `contracts`, but not directly on another product-domain implementation.
 2. Harness tooling must not depend on product-domain implementations.
-3. Telegram, model-provider, database, and cloud SDK imports are location-restricted, not permanently banned.
-4. In H0, no adapter or infrastructure source directory is approved, so such imports are prohibited in executable H0 files.
-5. In H1+, an adapter directory is approved by updating the architecture policy and an ADR—not by weakening or bypassing the test.
-6. Placeholder product directories must contain no executable source files during H0.
+3. Channel, model-provider, database, and cloud SDK imports are location-restricted, not permanently banned.
+4. During harness bootstrap, no adapter or infrastructure source directory is approved, so such imports are prohibited in executable harness files.
+5. In later stages, an adapter directory is approved by updating the architecture policy and an ADR—not by weakening or bypassing the test.
+6. Placeholder product directories must contain no executable source files during harness bootstrap.
 
 ## Remediation
 

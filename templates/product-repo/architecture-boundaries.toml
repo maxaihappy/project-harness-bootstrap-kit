@@ -1,0 +1,32 @@
+# Machine-readable architecture boundary policy.
+
+[scan]
+paths = ["packages", "harness", "tests/architecture"]
+exclude_globs = []
+
+[product_domains]
+domain_alpha = "packages/domain_alpha"
+domain_beta = "packages/domain_beta"
+
+[contracts]
+path = "packages/contracts"
+
+[harness]
+paths = ["harness", "tests/architecture"]
+
+[placeholder_only]
+paths = [
+  "packages/contracts",
+  "packages/domain_alpha",
+  "packages/domain_beta",
+  "harness",
+]
+executable_extensions = [".py", ".pyi"]
+
+[restricted_imports.model_providers]
+modules = ["openai", "anthropic", "google.generativeai"]
+approved_paths = []
+
+[restricted_imports.cloud]
+modules = ["boto3", "google.cloud"]
+approved_paths = []

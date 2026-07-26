@@ -1,7 +1,7 @@
 [project]
-name = "continuum-harness"
-version = "0.0.0"
-description = "H0 repository harness tooling for Project Continuum (not the product runtime)"
+name = "project-harness-bootstrap-kit"
+version = "0.1.0"
+description = "Reusable repository harness and bootstrap kit tooling (not a product runtime)"
 readme = "README.md"
 requires-python = ">=3.12"
 
