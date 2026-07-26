@@ -72,6 +72,12 @@ def _build_values(project_name: str, display_name: str, description: str) -> dic
     }
 
 
+def _target_is_non_empty(target_dir: Path) -> bool:
+    if not target_dir.exists():
+        return False
+    return any(target_dir.iterdir())
+
+
 def generate_project(
     harness_root: Path,
     target_dir: Path,
@@ -79,18 +85,24 @@ def generate_project(
     display_name: str,
     *,
     description: str | None = None,
-    clean: bool = True,
+    overwrite: bool = False,
 ) -> GenerationResult:
     template_root = harness_root / "templates" / "product-repo"
     if not template_root.is_dir():
         raise FileNotFoundError(f"Template tree not found: {template_root}")
 
     if target_dir.exists():
-        if not clean:
-            raise FileExistsError(f"Target already exists: {target_dir}")
-        shutil.rmtree(target_dir)
+        if _target_is_non_empty(target_dir):
+            if not overwrite:
+                raise FileExistsError(
+                    f"Target directory is not empty: {target_dir}. "
+                    "Use --overwrite to replace an existing directory intentionally."
+                )
+            shutil.rmtree(target_dir)
+        target_dir.mkdir(parents=True, exist_ok=True)
+    else:
+        target_dir.mkdir(parents=True, exist_ok=True)
 
-    target_dir.mkdir(parents=True, exist_ok=True)
     values = _build_values(
         project_name,
         display_name,

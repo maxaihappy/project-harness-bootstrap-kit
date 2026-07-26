@@ -6,7 +6,7 @@ Use this checklist when creating a product repository from the harness.
 
 - [ ] Harness repository passes `bash scripts/check`
 - [ ] Target product name and display name are chosen
-- [ ] Target directory does not already exist (or may be overwritten intentionally)
+- [ ] Target directory does not already exist (or use `--overwrite` intentionally)
 - [ ] Product owner approves repository creation
 
 ## Generation
@@ -14,8 +14,18 @@ Use this checklist when creating a product repository from the harness.
 ```bash
 bash scripts/generate-project /path/to/new-repo <project-name> "<Display Name>"
 cd /path/to/new-repo
+git init
 uv lock
 bash scripts/bootstrap
+bash scripts/test
+bash scripts/secrets-check
+bash scripts/check
+```
+
+To replace an existing non-empty directory intentionally:
+
+```bash
+bash scripts/generate-project --overwrite /path/to/new-repo <project-name> "<Display Name>"
 ```
 
 ## After generation
@@ -23,8 +33,9 @@ bash scripts/bootstrap
 - [ ] `docs/lineage.md` records harness provenance only
 - [ ] No H0 validation dossiers or imported product strategy documents are present
 - [ ] `bash scripts/check` passes in the generated repository
+- [ ] `make secrets-baseline` succeeds when baseline maintenance is required
 - [ ] Residual-reference validation shows no unintended import references
-- [ ] Initialize a new Git repository and set the product remote
+- [ ] Set the product remote on the initialized Git repository
 - [ ] Create product-specific governance documents as needed
 - [ ] Do not claim harness H0 evidence as product evidence
 

@@ -40,6 +40,8 @@ allow_prefixes = [
   "docs/exec-plans/active/",
   "docs/validation/issue-1-",
   "harness-config.toml",
+  "harness/reference_policy.py",
+  "harness/generator/render.py",
 ]
 
 scan_roots = [
@@ -55,6 +57,7 @@ scan_roots = [
   "scripts/",
   ".github/",
   "packages/",
+  "harness/",
   "docs/runbooks/",
   "docs/design-docs/",
   "templates/",
