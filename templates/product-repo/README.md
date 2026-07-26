@@ -4,7 +4,11 @@
 
 ## Quick start
 
+After generation, initialize the repository and install locked dependencies:
+
 ```bash
+git init
+uv lock
 bash scripts/bootstrap
 ```
 

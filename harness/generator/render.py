@@ -78,6 +78,36 @@ def _target_is_non_empty(target_dir: Path) -> bool:
     return any(target_dir.iterdir())
 
 
+def _paths_overlap(path_a: Path, path_b: Path) -> bool:
+    """Return True when two resolved paths are equal or one contains the other."""
+    left = path_a.resolve()
+    right = path_b.resolve()
+    if left == right:
+        return True
+    try:
+        left.relative_to(right)
+        return True
+    except ValueError:
+        pass
+    try:
+        right.relative_to(left)
+        return True
+    except ValueError:
+        pass
+    return False
+
+
+def _assert_safe_generation_target(harness_root: Path, target_dir: Path) -> None:
+    harness_resolved = harness_root.resolve()
+    target_resolved = target_dir.resolve()
+    if _paths_overlap(harness_resolved, target_resolved):
+        raise ValueError(
+            f"Unsafe generation target: {target_resolved} overlaps with the harness "
+            f"repository at {harness_resolved}. Choose a target outside the harness "
+            "source tree; --overwrite does not permit self-overwrite."
+        )
+
+
 def generate_project(
     harness_root: Path,
     target_dir: Path,
@@ -90,6 +120,8 @@ def generate_project(
     template_root = harness_root / "templates" / "product-repo"
     if not template_root.is_dir():
         raise FileNotFoundError(f"Template tree not found: {template_root}")
+
+    _assert_safe_generation_target(harness_root, target_dir)
 
     if target_dir.exists():
         if _target_is_non_empty(target_dir):

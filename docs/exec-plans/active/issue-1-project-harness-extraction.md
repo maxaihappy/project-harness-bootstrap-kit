@@ -24,13 +24,16 @@ This file is the **active execution plan** for Issue #1. Historical H0 evidence 
 | Implementation branch | `foundation/extract-project-harness` — created |
 | Draft pull request | [#2 — draft](https://github.com/maxaihappy/project-harness-bootstrap-kit/pull/2) |
 | Reviewed implementation candidate | `d10a3c22b814a853e0975a8bc9034ce4575ce4ff` |
+| Remediation candidate | `b5d62179864fed7a68e2210e396e83d9835ee464` |
 | Independent review report | [issue-1-manus-independent-review-d10a3c22.md](../../validation/reviews/issue-1-manus-independent-review-d10a3c22.md) |
+| Independent re-review report | [issue-1-manus-rereview-b5d6217.md](../../validation/reviews/issue-1-manus-rereview-b5d6217.md) |
 | Access-block review report | [issue-1-manus-access-block-d10a3c22.md](../../validation/reviews/issue-1-manus-access-block-d10a3c22.md) — preserved |
-| Manus recommendation | **BLOCK** |
+| Manus recommendation | **BLOCK** (initial review and re-review) |
 | Remediation | **in progress** |
 | ADR for extraction decisions | [ADR-0002](../../decisions/adr-0002-project-harness-extraction.md) — accepted |
 | Validation dossier | [docs/validation/issue-1-project-harness-extraction.md](../../validation/issue-1-project-harness-extraction.md) — remediation evidence |
-| Independent re-review | **not yet completed** |
+| Independent re-review | **completed** — BLOCK at `b5d62179864fed7a68e2210e396e83d9835ee464` |
+| Second-pass remediation | **in progress** |
 | Closeout | **not yet completed** |
 | Final delta review | **not yet required** |
 | Product-owner merge approval | **not yet requested** |
@@ -167,8 +170,10 @@ Issue #1 implementation will add harness-specific tests (residual-reference dete
 | Implementation | **completed** (Steps 3–7) at `d10a3c22b814a853e0975a8bc9034ce4575ce4ff` |
 | Local validation | **completed** at reviewed candidate |
 | Independent review | **completed** — BLOCK at `d10a3c22b814a853e0975a8bc9034ce4575ce4ff` |
-| Remediation | **in progress** |
-| CI | **not yet completed** for remediation commit |
+| Remediation candidate | **submitted** at `b5d62179864fed7a68e2210e396e83d9835ee464` |
+| Independent re-review | **completed** — BLOCK at `b5d62179864fed7a68e2210e396e83d9835ee464` |
+| Remediation (second pass) | **in progress** |
+| CI | **not yet completed** for second remediation commit |
 | Closeout | **not yet completed** |
 | Final delta review | **not yet completed** |
 | Merge | **not yet completed** |
@@ -258,27 +263,33 @@ The reviewer must use a fresh clone or clean isolated checkout pinned to the exa
 
 ### Step 10 — Remediation (in progress)
 
-Independent review at `d10a3c22b814a853e0975a8bc9034ce4575ce4ff` returned **BLOCK**. Findings B-01, H-01, M-01, M-02, and L-01 are being remediated. Review reports:
+Independent review at `d10a3c22b814a853e0975a8bc9034ce4575ce4ff` returned **BLOCK**. Findings B-01, H-01, M-01, M-02, and L-01 were remediated in candidate `b5d62179864fed7a68e2210e396e83d9835ee464`. Review reports:
 
 - [issue-1-manus-independent-review-d10a3c22.md](../../validation/reviews/issue-1-manus-independent-review-d10a3c22.md)
 - [issue-1-manus-access-block-d10a3c22.md](../../validation/reviews/issue-1-manus-access-block-d10a3c22.md) (preserved)
 
 ### Step 11 — Independent re-review
 
-**Not yet completed.** Repeat independent review at the remediation candidate SHA after local validation and CI pass.
+**Completed — BLOCK** at `b5d62179864fed7a68e2210e396e83d9835ee464`. Remaining findings H-01 (unsafe harness self-overwrite), M-01 (generated quick-start documentation), and M-02 (traceability) are being remediated. Review report:
 
-### Step 12 — Closeout
+- [issue-1-manus-rereview-b5d6217.md](../../validation/reviews/issue-1-manus-rereview-b5d6217.md)
+
+### Step 12 — Second remediation (in progress)
+
+Address unsafe target overlap, generated quick-start documentation, and traceability for the re-review candidate. A new remediation commit and independent re-review are required before closeout.
+
+### Step 13 — Closeout
 
 - Finalize the validation dossier with requirement coverage, command outputs, CI links, review record, limitations, and rollback.
 - Move this plan to `docs/exec-plans/completed/issue-1-project-harness-extraction.md`.
 - Set plan status to `ready-for-merge`.
 - Confirm CI is green on the PR head.
 
-### Step 13 — Final delta review (if needed)
+### Step 14 — Final delta review (if needed)
 
 If any commits land after the independently reviewed implementation commit, obtain a narrow delta review before merge.
 
-### Step 14 — Product-owner approval and merge
+### Step 15 — Product-owner approval and merge
 
 - Product owner reviews scope, validation dossier, independent review, CI, and rollback.
 - Merge using a merge commit after explicit approval.

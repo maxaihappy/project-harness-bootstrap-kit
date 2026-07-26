@@ -2,6 +2,16 @@
 
 This repository was generated from the project harness bootstrap kit for **{{PROJECT_DISPLAY_NAME}}**.
 
+## First-time setup
+
+Run these commands in order after generation:
+
+```bash
+git init
+uv lock
+bash scripts/bootstrap
+```
+
 ## Authoritative commands
 
 | Command | Purpose |

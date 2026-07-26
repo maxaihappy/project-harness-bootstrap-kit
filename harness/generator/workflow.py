@@ -20,6 +20,13 @@ OPERATOR_COMMANDS_IN_TARGET: tuple[str, ...] = (
     "bash scripts/check",
 )
 
+# Commands advertised in generated README and AGENTS quick-start guidance.
+QUICK_START_COMMANDS: tuple[str, ...] = OPERATOR_COMMANDS_IN_TARGET[:3]
+
+
+def format_command_block(commands: Sequence[str]) -> str:
+    return "\n".join(commands)
+
 
 def subprocess_env() -> dict[str, str]:
     env = os.environ.copy()
