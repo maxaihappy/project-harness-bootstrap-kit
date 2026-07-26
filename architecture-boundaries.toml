@@ -1,4 +1,4 @@
-# Machine-readable architecture boundary policy for H0.
+# Machine-readable architecture boundary policy for the project harness.
 # See ARCHITECTURE.md for intent. Enforced by tests/architecture/test_package_boundaries.py.
 
 [scan]
@@ -11,10 +11,10 @@ paths = [
 exclude_globs = ["tests/fixtures/**"]
 
 [product_domains]
-channel_gateway = "packages/channel_gateway"
-relationship_core = "packages/relationship_core"
-intelligence = "packages/intelligence"
-memory_governance = "packages/memory_governance"
+domain_alpha = "packages/domain_alpha"
+domain_beta = "packages/domain_beta"
+domain_gamma = "packages/domain_gamma"
+domain_delta = "packages/domain_delta"
 
 [contracts]
 path = "packages/contracts"
@@ -25,16 +25,15 @@ paths = ["harness", "tests/architecture"]
 [placeholder_only]
 paths = [
   "packages/contracts",
-  "packages/channel_gateway",
-  "packages/relationship_core",
-  "packages/intelligence",
-  "packages/memory_governance",
-  "harness",
+  "packages/domain_alpha",
+  "packages/domain_beta",
+  "packages/domain_gamma",
+  "packages/domain_delta",
   "evals",
 ]
 executable_extensions = [".py", ".pyi", ".js", ".jsx", ".ts", ".tsx", ".go", ".rs", ".java", ".kt", ".sh"]
 
-[restricted_imports.telegram]
+[restricted_imports.channel]
 modules = ["telegram", "telebot"]
 approved_paths = []
 

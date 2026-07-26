@@ -1,4 +1,4 @@
-"""Repository traceability checks for required H0 artifacts and links."""
+"""Repository traceability checks for required harness artifacts and links."""
 
 from __future__ import annotations
 
@@ -11,21 +11,32 @@ ROOT = Path(__file__).resolve().parents[1]
 
 OBSOLETE_ACTIVE_PLAN_PATH = "docs/exec-plans/active/h0-bootstrap.md"
 COMPLETED_PLAN_PATH = "docs/exec-plans/completed/h0-repository-bootstrap.md"
-ACTIVE_PLAN_PATH = "docs/exec-plans/active/h0-repository-bootstrap.md"
+H0_ACTIVE_PLAN_PATH = "docs/exec-plans/active/h0-repository-bootstrap.md"
+ISSUE1_ACTIVE_PLAN_PATH = "docs/exec-plans/active/issue-1-project-harness-extraction.md"
+ISSUE1_VALIDATION_PATH = "docs/validation/issue-1-project-harness-extraction.md"
 
 REQUIRED_PATHS = [
     "AGENTS.md",
     "ARCHITECTURE.md",
+    "harness-config.toml",
     "docs/strategy/project-continuum-proposal.md",
     "docs/reference/exports/project-continuum-proposal-v0.3.docx",
     "docs/reference/approved-inputs/h0-repository-bootstrap-approved.md",
     "docs/governance/document-register.md",
     "docs/decisions/adr-0001-h0-repository-bootstrap.md",
+    "docs/decisions/adr-0002-project-harness-extraction.md",
     COMPLETED_PLAN_PATH,
+    ISSUE1_ACTIVE_PLAN_PATH,
+    ISSUE1_VALIDATION_PATH,
     "docs/validation/h0-repository-bootstrap.md",
     "docs/validation/reviews/h0-manus-review-5f772f2.md",
     "docs/validation/reviews/h0-manus-rereview-19f6765.md",
     "docs/validation/reviews/h0-manus-github-evidence-addendum-19f6765.md",
+    "docs/runbooks/initialize-harness.md",
+    "docs/runbooks/new-repository-checklist.md",
+    "docs/design-docs/harness-generated-boundary.md",
+    "scripts/generate-project",
+    "templates/product-repo/README.md",
     ".github/ISSUE_TEMPLATE/requirement.md",
     ".github/PULL_REQUEST_TEMPLATE/pull_request_template.md",
     ".github/workflows/ci.yml",
@@ -77,7 +88,13 @@ def _extract_linked_paths(content: str) -> set[str]:
             candidate.startswith("docs/")
             or candidate.startswith(".github/")
             or candidate.startswith("reviews/")
-            or candidate in {"AGENTS.md", "ARCHITECTURE.md", "architecture-boundaries.toml"}
+            or candidate
+            in {
+                "AGENTS.md",
+                "ARCHITECTURE.md",
+                "architecture-boundaries.toml",
+                "harness-config.toml",
+            }
         ):
             continue
         linked.add(candidate)
@@ -85,19 +102,20 @@ def _extract_linked_paths(content: str) -> set[str]:
 
 
 @pytest.mark.parametrize("relative_path", REQUIRED_PATHS)
-def test_required_h0_paths_exist(relative_path: str) -> None:
+def test_required_harness_paths_exist(relative_path: str) -> None:
     assert (ROOT / relative_path).is_file(), f"Missing required path: {relative_path}"
 
 
-def test_completed_plan_replaced_active_plan() -> None:
+def test_h0_completed_plan_replaced_active_plan() -> None:
     assert (ROOT / COMPLETED_PLAN_PATH).is_file()
-    assert not (ROOT / ACTIVE_PLAN_PATH).exists()
+    assert not (ROOT / H0_ACTIVE_PLAN_PATH).exists()
 
 
-def test_agents_md_points_to_completed_plan() -> None:
+def test_agents_md_navigation() -> None:
     agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+    assert ISSUE1_ACTIVE_PLAN_PATH in agents
     assert COMPLETED_PLAN_PATH in agents
-    assert ACTIVE_PLAN_PATH not in agents
+    assert H0_ACTIVE_PLAN_PATH not in agents
 
 
 def test_approved_baseline_hash_matches() -> None:
@@ -134,6 +152,7 @@ def test_required_document_links_resolve() -> None:
         "AGENTS.md",
         "docs/governance/document-register.md",
         "docs/validation/h0-repository-bootstrap.md",
+        "docs/validation/issue-1-project-harness-extraction.md",
     ]
     for relative_path in link_sources:
         path = ROOT / relative_path
@@ -147,6 +166,7 @@ def test_required_document_links_resolve() -> None:
                     "AGENTS.md",
                     "ARCHITECTURE.md",
                     "architecture-boundaries.toml",
+                    "harness-config.toml",
                 }
             ):
                 target = ROOT / linked
@@ -164,6 +184,8 @@ def test_document_register_authority_entries() -> None:
     assert "h0-repository-bootstrap-approved.md" in register
     assert "immutable" in register.lower() or "Immutable" in register
     assert COMPLETED_PLAN_PATH in register
-    assert "ready-for-merge" in register
+    assert ISSUE1_ACTIVE_PLAN_PATH in register
+    assert "adr-0002-project-harness-extraction.md" in register
+    assert "harness-config.toml" in register
     assert "project-continuum-proposal-v0.3.docx" in register
     assert "Non-authoritative" in register or "non-authoritative" in register

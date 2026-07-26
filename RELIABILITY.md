@@ -1,17 +1,17 @@
 # Reliability
 
-## H0 scope
+## Harness scope
 
-H0 reliability means deterministic, reproducible validation:
+Harness reliability means deterministic, reproducible validation:
 
 - Locked dependencies via `uv.lock`
 - Documented bootstrap and check commands
 - CI that fails on stale lockfiles, lint, test, architecture, or secret findings
 
-## Future product
+## Generated product repositories
 
-Operational reliability targets for the Continuum product are defined in the canonical proposal and future ADRs. H0 does not deploy services.
+Generated repositories inherit the harness validation workflow. Operational reliability targets for deployed products are defined by the product owner in generated documentation and future ADRs.
 
 ## Rollback
 
-H0 changes roll back by reverting the merge commit on `main`.
+Harness changes roll back by reverting the merge commit on `main`.

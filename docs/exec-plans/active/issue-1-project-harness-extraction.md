@@ -25,9 +25,9 @@ This file is the **active execution plan** for Issue #1. Implementation has **no
 | Draft pull request | [#2 — draft](https://github.com/maxaihappy/project-harness-bootstrap-kit/pull/2) |
 | Planning commit | `8b980d8b673acf8a8da5c268257cb4f8c1d8c4b9` |
 | Planning validation | `bash scripts/check` — passed |
-| ADR for extraction decisions | **not yet created** |
-| Validation dossier | [docs/validation/issue-1-project-harness-extraction.md](../../validation/issue-1-project-harness-extraction.md) — planning stub only |
-| Reviewed implementation candidate | **not yet identified** |
+| ADR for extraction decisions | [ADR-0002](../../decisions/adr-0002-project-harness-extraction.md) — accepted |
+| Validation dossier | [docs/validation/issue-1-project-harness-extraction.md](../../validation/issue-1-project-harness-extraction.md) — implementation evidence |
+| Implementation candidate | pending commit (local validation complete) |
 | Independent review | **not yet completed** |
 | Remediation | **not applicable / not yet started** |
 | Closeout | **not yet completed** |
@@ -163,8 +163,8 @@ Issue #1 implementation will add harness-specific tests (residual-reference dete
 |---|---|
 | Planning initialization | **completed** at `8b980d8b673acf8a8da5c268257cb4f8c1d8c4b9` |
 | Draft pull request | **completed** — PR #2 |
-| Implementation | **not yet completed** |
-| Local validation | **not yet completed** |
+| Implementation | **completed** (Steps 3–7) |
+| Local validation | **completed** — 45 tests passed |
 | CI | **not yet completed** |
 | Independent review | **not yet completed** |
 | Remediation | **not yet completed** |
@@ -201,36 +201,34 @@ Record issue #1, branch, source commit, source tags, and future PR placeholder i
 - State: draft
 - Planning commit: `8b980d8b673acf8a8da5c268257cb4f8c1d8c4b9`
 
-### Step 3 — Generalize governance and navigation
+### Step 3 — Generalize governance and navigation — completed
 
-- Update `AGENTS.md`, root `README.md`, and policy documents to describe the harness repository rather than Continuum product development.
-- Introduce configurable project-specific values and document the harness-versus-generated-repository boundary.
-- Add initialization and new-repository checklist documentation.
+- Updated `AGENTS.md`, `README.md`, policy documents, and `harness-config.toml`.
+- Added harness-versus-generated boundary documentation.
+- Added initialization and new-repository checklist runbooks.
 
-### Step 4 — Remove unintended Continuum coupling
+### Step 4 — Remove unintended Continuum coupling — completed
 
-- Replace unintended Continuum-specific names, paths, assumptions, and operational wording.
-- Remove machine-specific local paths from reusable templates.
-- Preserve intentional provenance references and examples where documented.
+- Renamed Continuum-specific package directories to neutral placeholders.
+- Generalized operational documentation and tooling package name.
+- Preserved intentional provenance under `docs/reference/`, `docs/validation/h0-*`, and `docs/exec-plans/completed/`.
 
-### Step 5 — Add harness-specific validation
+### Step 5 — Add harness-specific validation — completed
 
-- Add tests that detect unintended residual Continuum references.
-- Add template-generation and clean-room generation validation.
-- Extend traceability checks for Issue #1 artifacts without weakening H0 provenance boundaries.
+- Added `tests/test_residual_references.py`, `tests/test_template_generation.py`, and `tests/test_clean_room_generation.py`.
+- Extended `tests/test_traceability.py` for Issue #1 artifacts.
 
-### Step 6 — Validate with disposable generated repository
+### Step 6 — Validate with disposable generated repository — completed
 
-- Generate a disposable repository from the harness.
-- Run all documented validation commands in the generated repository.
-- Confirm generated repositories do not misrepresent Continuum H0 evidence as their own.
+- Clean-room test generates a disposable repository, runs `uv lock`, and passes `scripts/bootstrap`, `scripts/test`, `scripts/secrets-check`, and `scripts/check`.
 
-### Step 7 — ADR and architecture updates
+### Step 7 — ADR and architecture updates — completed
 
-- Create ADR(s) for material extraction decisions.
-- Update architecture and traceability policy only where required by extraction scope.
+- Accepted [ADR-0002](../../decisions/adr-0002-project-harness-extraction.md).
+- Updated `architecture-boundaries.toml` for neutral domain placeholders and harness tooling paths.
+- Extended CI push triggers to `foundation/**`.
 
-### Step 8 — Candidate validation commit
+### Step 8 — Candidate validation commit — completed locally
 
 Run and record:
 
@@ -241,7 +239,9 @@ bash scripts/secrets-check
 bash scripts/check
 ```
 
-Record `VALIDATED_SOURCE_COMMIT` with `git rev-parse HEAD` (40-character SHA).
+Local results: all commands passed; 45 tests including architecture, traceability, residual-reference, template-generation, and clean-room suites.
+
+`VALIDATED_SOURCE_COMMIT` will be recorded after the implementation commit lands. Independent review, closeout, and merge remain pending.
 
 ### Step 9 — Independent review
 

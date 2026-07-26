@@ -1,0 +1,61 @@
+# Project-specific configuration for the harness repository.
+# Generated product repositories receive their own copy with substituted values.
+# See docs/design-docs/harness-generated-boundary.md for the harness-versus-generated boundary.
+
+[harness]
+name = "project-harness-bootstrap-kit"
+display_name = "Project Harness Bootstrap Kit"
+description = "Reusable repository harness and bootstrap kit derived from an imported H0 baseline"
+repository_url = "https://github.com/maxaihappy/project-harness-bootstrap-kit"
+
+[provenance]
+source_repository = "https://github.com/maxaihappy/continuum"
+source_commit = "7c8e04e1e864ee70bd18ffdad29d6517aecde1f7"  # pragma: allowlist secret
+continuum_source_tag = "h0-bootstrap-baseline"
+harness_import_tag = "imported-continuum-h0"
+
+[project_template]
+default_name = "example-product"
+default_display_name = "Example Product"
+default_description = "Product repository generated from the project harness bootstrap kit"
+
+[packages]
+contracts = "packages/contracts"
+domain_alpha = "packages/domain_alpha"
+domain_beta = "packages/domain_beta"
+domain_gamma = "packages/domain_gamma"
+domain_delta = "packages/domain_delta"
+
+[residual_references]
+# Paths where import/provenance references are intentional in the harness repo.
+allow_prefixes = [
+  "docs/reference/approved-inputs/",
+  "docs/reference/exports/",
+  "docs/exec-plans/completed/",
+  "docs/validation/h0-",
+  "docs/validation/reviews/h0-manus-",
+  "docs/strategy/project-continuum-proposal.md",
+  "docs/decisions/adr-0001-h0-repository-bootstrap.md",
+  "docs/decisions/adr-0002-project-harness-extraction.md",
+  "docs/exec-plans/active/",
+  "docs/validation/issue-1-",
+  "harness-config.toml",
+]
+
+scan_roots = [
+  "AGENTS.md",
+  "README.md",
+  "ARCHITECTURE.md",
+  "SECURITY.md",
+  "PRIVACY.md",
+  "RELIABILITY.md",
+  "COST.md",
+  "pyproject.toml",
+  "architecture-boundaries.toml",
+  "scripts/",
+  ".github/",
+  "packages/",
+  "docs/runbooks/",
+  "docs/design-docs/",
+  "templates/",
+]

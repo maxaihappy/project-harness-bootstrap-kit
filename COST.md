@@ -1,12 +1,12 @@
 # Cost
 
-## H0 scope
+## Harness scope
 
-H0 has no cloud infrastructure or metered external services. Costs are limited to local development and GitHub Actions CI minutes.
+The harness has no cloud infrastructure or metered external services. Costs are limited to local development and GitHub Actions CI minutes.
 
-## Future product
+## Generated product repositories
 
-Model-provider, channel, and infrastructure cost governance for the Continuum product are defined in the canonical proposal. H0 does not implement cost controls.
+Generated repositories inherit harness CI efficiency practices. Model-provider, channel, and infrastructure cost governance for deployed products are defined by the product owner in generated documentation.
 
 ## CI efficiency
 
